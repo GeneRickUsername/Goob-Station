@@ -22,6 +22,9 @@
   - type: StaticPrice
     price: 3000
   - type: GrantCqc
+  - type: GuideHelp
+    guides:
+    - CQC
 
 - type: entity
   parent: [ BaseItem, BaseSyndicateContraband ]
@@ -39,3 +42,25 @@
   - type: StaticPrice
     price: 3000
   - type: GrantSleepingCarp
+  - type: GuideHelp
+    guides:
+    - SleepingCarp
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: CapoeiraManual
+  name: Capoeira manual
+  description: A small, black manual. There are drawn instructions of Capoeira.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/cqc_manual.rsi
+    layers:
+    - state: icon
+  - type: Item
+    size: Small
+  - type: StaticPrice
+    price: 3000
+  - type: GrantCapoeira
+  - type: GuideHelp
+    guides:
+    - Capoeira

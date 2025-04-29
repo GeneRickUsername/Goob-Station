@@ -218,9 +218,6 @@ uplink-reverse-bear-trap-desc = An ingenious execution device worn on (or forced
 uplink-clothing-explosive-gloves-name = Explosive Insulated Gloves
 uplink-clothing-explosive-gloves-desc = Gloves that look just like normal insulated gloves, but explode a second after being shocked, disabling the user's hands.
 
-uplink-smugglers-satchel-name = Smuggler's Satchel
-uplink-smugglers-satchel-desc = A rugged satchel that can be hidden under floor tiles. Simply remove a floor tile, anchor the satchel to the plating, then put the tile back!
-
 # Disruption
 
 uplink-syndicate-weapon-module-advanced-name = advanced weapons module
@@ -229,10 +226,13 @@ uplink-syndicate-weapon-module-advanced-desc = Upgrades a cyborg with an energy 
 # Martial Arts
 
 uplink-cqc-name = CQC Manual
-uplink-cqc-desc = A manual that teaches a single user tactical Close-Quarters Combat before self-destructing. Does not restrict weapon usage. Your disarms will inflict some stamina damage while making people temporarily slur their words, your grabs will immobilize for a second making it easier to reinforce them, your harm attacks will deal moderate stamina damage, and you will get a set of combos that allow you to efficiently knockdown, disarm or stun your opponent. You can find more information on CQC and its combos here.
+uplink-cqc-desc = A manual that teaches a single user tactical Close-Quarters Combat before self-destructing. CQC is primarily an aggressive fighting style that focuses on dealing stamina damage to targets - designed to quickly subdue opponents and overpower them with pressure technique and crushing blows.
+
+uplink-capoeira-name = Capoeira Manual
+uplink-capoeira-desc = A manual that teaches a single user Capoeira before self-destructing. Capoeira focuses on swift attacks that link into flowing combos, with each move faster and harder than the last one, fueled by relentless momentum.
 
 uplink-sleeping-carp-name = Way of the Sleeping Carp Scroll
-uplink-sleeping-carp-desc = This scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, deflecting ranged weapon fire. Learning this art means you will also refuse to use dishonorable ranged weaponry. Unable to be understood by vampire and changeling agents.
+uplink-sleeping-carp-desc = This single-use scroll contains the secrets of an ancient martial arts technique. You will master unarmed combat, deflecting ranged weapon fire, and space carp will become friendly to you. Learning this art means you will also refuse to use dishonorable ranged weaponry. Unable to be understood by changelings.
 
 # Misc
 
@@ -244,3 +244,6 @@ uplink-pizza-bomb-desc = First pioneered by terrorists, now is used by the syndi
 
 uplink-pizza-party-crate-name = Pizza Party Crate
 uplink-pizza-party-crate-desc = A crate coming in the form of disaster pizza delivery. Filled with pizzas and pizza bombs to throw the most explosive pizza party ever. Unfortunately you can't seem to remember which one is which.
+
+uplink-undetermined-bundle-name = Undetermined Bundle Crate
+uplink-undetermined-bundle-desc = This crate comes with three random bundles and allows to choose one of them. Guaranteed to include Syndicate encryption key.

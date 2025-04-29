@@ -1,15 +1,22 @@
 // SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Aidenkrz <aiden@djkraz.com>
+// SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
 // SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
 // SPDX-FileCopyrightText: 2025 JohnOakman <sremy2012@hotmail.fr>
 // SPDX-FileCopyrightText: 2025 Lincoln McQueen <lincoln.mcqueen@gmail.com>
+// SPDX-FileCopyrightText: 2025 Marcus F <marcus2008stoke@gmail.com>
 // SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
+// SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
 // SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
+// SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
+// SPDX-FileCopyrightText: 2025 thebiggestbruh <199992874+thebiggestbruh@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 thebiggestbruh <marcus2008stoke@gmail.com>
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
+using Content.Goobstation.Shared.Changeling.Components;
 using Content.Goobstation.Shared.MartialArts.Components;
 using Content.Goobstation.Shared.MartialArts.Events;
 using Content.Shared.IdentityManagement;
@@ -39,11 +46,17 @@ public partial class SharedMartialArtsSystem
         if (!_netManager.IsServer)
             return;
 
-        if (ent.Comp.MaximumUses == ent.Comp.CurrentUses)
+        if (ent.Comp.MaximumUses <= ent.Comp.CurrentUses)
         {
             _popupSystem.PopupEntity(Loc.GetString("cqc-fail-used", ("manual", Identity.Entity(ent, EntityManager))),
             args.User,
             args.User);
+            return;
+        }
+
+        if (HasComp<ChangelingIdentityComponent>(args.User))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("cqc-fail-changeling"), args.User, args.User);
             return;
         }
 
@@ -73,6 +86,7 @@ public partial class SharedMartialArtsSystem
             case >= 3:
                 if (!TryGrantMartialArt(args.User, ent.Comp))
                     return;
+                _faction.AddFaction(args.User, "Dragon");
                 var userReflect = EnsureComp<ReflectComponent>(args.User);
                 userReflect.ReflectProb = 1;
                 userReflect.Spread = 60;
@@ -85,9 +99,6 @@ public partial class SharedMartialArtsSystem
                 ent.Comp.CurrentUses++;
                 break;
         }
-
-        if (ent.Comp.MaximumUses == ent.Comp.CurrentUses)
-            return;
     }
 
     private void CarpScrollDelay(Entity<SleepingCarpStudentComponent> ent)
@@ -111,7 +122,7 @@ public partial class SharedMartialArtsSystem
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !_proto.TryIndex<MartialArtPrototype>(proto.MartialArtsForm.ToString(), out var martialArtProto)
-            || !TryUseMartialArt(ent, proto.MartialArtsForm, out var target, out var downed))
+            || !TryUseMartialArt(ent, proto, out var target, out var downed))
             return;
 
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage + ent.Comp.ConsecutiveGnashes * 5, out _);
@@ -120,14 +131,14 @@ public partial class SharedMartialArtsSystem
         if (!downed)
         {
             var saying =
-                Enumerable.ElementAt<LocId>(martialArtProto.RandomSayings, (int)_random.Next(martialArtProto.RandomSayings.Count));
+                Enumerable.ElementAt(martialArtProto.RandomSayings, _random.Next(martialArtProto.RandomSayings.Count));
             var ev = new SleepingCarpSaying(saying);
             RaiseLocalEvent(ent, ev);
         }
         else
         {
             var saying =
-                Enumerable.ElementAt<LocId>(martialArtProto.RandomSayingsDowned, (int)_random.Next(martialArtProto.RandomSayingsDowned.Count));
+                Enumerable.ElementAt(martialArtProto.RandomSayingsDowned, _random.Next(martialArtProto.RandomSayingsDowned.Count));
             var ev = new SleepingCarpSaying(saying);
             RaiseLocalEvent(ent, ev);
         }
@@ -137,14 +148,14 @@ public partial class SharedMartialArtsSystem
         ref SleepingCarpKneeHaulPerformedEvent args)
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
-            || !TryUseMartialArt(ent, proto.MartialArtsForm, out var target, out var downed))
+            || !TryUseMartialArt(ent, proto, out var target, out var downed))
             return;
 
         if (!downed)
         {
             DoDamage(ent, target, proto.DamageType, proto.ExtraDamage, out _);
             _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
-            _stun.TryKnockdown(target, TimeSpan.FromSeconds((long)proto.ParalyzeTime), true);
+            _stun.TryKnockdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime), true, proto.DropHeldItemsBehavior);
         }
         else
         {
@@ -162,7 +173,7 @@ public partial class SharedMartialArtsSystem
         ref SleepingCarpCrashingWavesPerformedEvent args)
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
-            || !TryUseMartialArt(ent, proto.MartialArtsForm, out var target, out var downed)
+            || !TryUseMartialArt(ent, proto, out var target, out var downed)
             || downed)
             return;
 

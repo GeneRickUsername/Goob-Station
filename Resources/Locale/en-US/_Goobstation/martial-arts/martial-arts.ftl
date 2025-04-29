@@ -7,10 +7,14 @@
 cqc-fail-used = {CAPITALIZE(THE($manual))} is already used.
 cqc-fail-notself = You can't teach anyone with {CAPITALIZE(THE($manual))}.
 
+cqc-fail-changeling = We are beyond using this.
 cqc-fail-knowanother = You already know another martial art.
 cqc-fail-already = You already know everything about a Martial art.
 cqc-success-unblocked = Your CQC skills are not bound to kitchen anymore.
 cqc-success-learned = You have learned CQC.
+capoeira-success-learned = You have learned Capoeira.
+dragon-success-learned = You have learned Dragon Kung Fu.
+ninjutsu-success-learned = You have learned Ninjutsu.
 
 cqc-manual-used = [color=white]{CAPITALIZE(THE($manual))} looks to be already used.[/color]
 
@@ -42,3 +46,18 @@ krav-maga-ready = You ready a {$action}
 
 martial-arts-action-sender = You hit {$name} with {$move}
 martial-arts-action-receiver = {$name} hit you with {$move}
+
+martial-arts-fail-prone = You can't use this combo while lying down!
+martial-arts-fail-target-down = You can't use this combo on downed targets!
+martial-arts-fail-target-standing = You can't use this combo on standing targets!
+capoeira-fail-low-velocity = You are too slow to perform this combo!
+ninjutsu-fail-loss-of-surprise = Your intentions are known! Cannot perform this move!
+
+alerts-dragon-power-name = Dragon Power
+alerts-dragon-power-desc = You take a moment to reflect on battles past and to come. This insight will protect you from future harm.
+
+alerts-sneak-attack-name = Sneak Attack
+alerts-sneak-attack-desc = To a true shinobi, the first strike and the last strike are one and the same.
+
+alerts-loss-of-surprise-name = Loss Of Surprise
+alerts-loss-of-surprise-desc = Your intentions are known! It will take you a few moments to sneak attack again.
