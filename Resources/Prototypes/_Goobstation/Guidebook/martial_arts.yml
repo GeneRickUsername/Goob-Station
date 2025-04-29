@@ -10,6 +10,8 @@
   - Capoeira
   - Ninjutsu
   - DragonKungFu
+  - SpaceBear
+  - PlasmaFist
 
 - type: guideEntry
   id: CQC
@@ -45,3 +47,13 @@
   id: DragonKungFu
   name: guide-entry-dragon-kung-fu
   text: "/ServerInfo/_Goobstation/Guidebook/MartialArts/DragonKungFu.xml"
+
+- type: guideEntry
+  id: SpaceBear
+  name: guide-entry-space-bear
+  text: "/ServerInfo/_Goobstation/Guidebook/MartialArts/SpaceBear.xml"
+
+- type: guideEntry
+  id: PlasmaFist
+  name: guide-entry-plasma-fist
+  text: "/ServerInfo/_Goobstation/Guidebook/MartialArts/PlasmaFist.xml"

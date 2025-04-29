@@ -74,7 +74,7 @@ public partial class SharedMartialArtsSystem
 
         if (downed)
         {
-            DoDamage(ent, target, "Slash", 2*proto.ExtraDamage, out _);
+            DoDamage(ent, target, "Slash", 2 * proto.ExtraDamage, out _);
             _stamina.TakeStaminaDamage(ent, -20f, applyResistances: false);
         }
         else
@@ -97,8 +97,8 @@ public partial class SharedMartialArtsSystem
         }
         else
         {
-            DoDamage(ent, target, "Slash", 2*proto.ExtraDamage, out _);
-            _stun.TrySlowdown(target, TimeSpan.FromSeconds(2), true);
+            DoDamage(ent, target, "Slash", 2 * proto.ExtraDamage, out _);
+            _stun.TrySlowdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime + 2), true);
         }
         ComboPopup(ent, target, proto.Name);
     }

@@ -40,4 +40,4 @@
   - Disarm
   - Disarm
   event: !type:BearSmokeyPerformedEvent
-  paralyzeTime: 2
+  paralyzeTime: 3

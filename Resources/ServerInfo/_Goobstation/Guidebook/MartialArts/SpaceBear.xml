@@ -1,0 +1,47 @@
+<Document>
+
+  # Rage of The Space Bear
+
+  <Box>
+    <GuideEntityEmbed Entity="SpaceBearManual" Caption=""/>
+  </Box>
+
+  This [textlink="martial art" link="MartialArts"] connects you to the twin spirits of Foh'Sie and Smoh'Kie. This martial art will allow the user to rampage through hordes of enemies like a true Space Bear!
+
+  ## Special abilities
+
+  The fire inside of these users burns hotter than the one around them. This means they are immune to the effects of fire. Additionally, their harm intent gains the aspect of claws and allows them to gain their stamina by striking the opponent.
+
+  ## Combo attacks
+
+  ### Bear Jaws
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+
+  Rip into the opponent with your jaws, slashing them. If they are downed, this will regenerate your stamina even further!
+
+  ### Paw Slam
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Slam into the opponent with your paws, knocking them down. This crushes them, stunning them and slowing them down. If they are already downed, this will instead crush them even harder, while only slowing them down for less time.
+
+  ### Smokey
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Channel the twin spirits through your very body to light the enemy on fire!
+
+</Document>

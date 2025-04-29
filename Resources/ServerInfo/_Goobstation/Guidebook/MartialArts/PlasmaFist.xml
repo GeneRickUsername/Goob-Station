@@ -1,0 +1,44 @@
+<Document>
+
+  # The Legendary Plasma Fist
+
+  <Box>
+    <GuideEntityEmbed Entity="PlasmaFistManual" Caption=""/>
+  </Box>
+
+  From the very heart of Boron to its verdant shores of plasma fire, the first of the plasma men spent their days battling each other from the native fauna and foreign entities. From this conflict, the long-lost legendary [textlink="martial art" link="MartialArts"] of The Plasma Fist was born. Nanotrasen wishes they could even mimic a fraction of this power.
+
+  ## Combo attacks
+
+  ### Tornado Sweep
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+
+  With a shout of "TORNADO SWEEP", throw everyone downa and repulse all items in a 10.0f radius away from you. This deals no additional damage, but anything that slams or gets slammed is fair game. Very nice for doing havok.
+
+  ### Throwback
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Knock someone far away, throwing any equipment in their hands into the air and throwing whatever is in your offhand at them. Useful for a combo. Activating a grenade in your offhand does not break your combo chain. Whatever is thrown will land on the same tile that your opponent will land at.
+
+  ### The Plasma Fist
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Violently gib your opponent and send whatever remain flying. This, in contrary to some people's expectations, does indeed kill your opponent. Should be used as a finisher due to its long combo.
+
+</Document>
