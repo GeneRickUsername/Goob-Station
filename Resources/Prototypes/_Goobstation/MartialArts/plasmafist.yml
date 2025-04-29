@@ -1,0 +1,42 @@
+- type: martialArt
+  id: PlasmaFist
+  martialArtsForm: PlasmaFist
+  roundstartCombos: PlasmaFistMoves
+
+- type: comboList
+  id: PlasmaFistMoves
+  combos:
+  - TornadoSweep
+  - Throwback
+  - ThePlasmaFist
+
+- type: combo
+  id: TornadoSweep
+  name: Tornado Sweep
+  martialArtsForm: PlasmaFist
+  attacks:
+  - Harm
+  - Grab
+  event: !type:TornadoSweepPerformedEvent
+
+- type: combo
+  id: Throwback
+  name: Throw Back
+  martialArtsForm: PlasmaFist
+  attacks:
+  - Harm
+  - Disarm
+  - Harm
+  event: !type:ThrowbackPerformedEvent
+
+- type: combo
+  id: ThePlasmaFist
+  name: The Plasma Fist
+  martialArtsForm: PlasmaFist
+  attacks:
+  - Harm
+  - Disarm
+  - Disarm
+  - Disarm
+  - Harm
+  event: !type:ThePlasmaFistPerformedEvent

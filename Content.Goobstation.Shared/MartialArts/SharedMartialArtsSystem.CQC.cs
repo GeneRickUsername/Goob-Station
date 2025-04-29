@@ -115,6 +115,7 @@ public partial class SharedMartialArtsSystem
         {
             case ComboAttackType.Disarm:
                 _stamina.TakeStaminaDamage(args.Target, 25f, applyResistances: true);
+                _slurred.DoSlur(args.Target, TimeSpan.FromSeconds(5));
                 break;
             case ComboAttackType.Harm:
                 // Snap neck
@@ -162,6 +163,9 @@ public partial class SharedMartialArtsSystem
                 _stun.TryKnockdown(args.Target, TimeSpan.FromSeconds(5), true);
                 ComboPopup(ent, args.Target, "Leg Sweep");
                 break;
+            case ComboAttackType.Grab:
+                _stun.TryStun(args.Target, TimeSpan.FromSeconds(1), true);
+                break;
         }
     }
 
@@ -178,6 +182,7 @@ public partial class SharedMartialArtsSystem
 
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage, out _);
         _stun.TryKnockdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime), true, proto.DropHeldItemsBehavior);
+        _stun.TryStun(target, TimeSpan.FromSeconds(proto.ParalyzeTime), true);
         if (TryComp<PullableComponent>(target, out var pullable))
             _pulling.TryStopPull(target, pullable, ent, true);
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit3.ogg"), target);

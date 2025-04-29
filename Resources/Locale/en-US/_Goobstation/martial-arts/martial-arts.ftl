@@ -14,6 +14,8 @@ cqc-success-learned = You have learned CQC.
 capoeira-success-learned = You have learned Capoeira.
 dragon-success-learned = You have learned Dragon Kung Fu.
 ninjutsu-success-learned = You have learned Ninjutsu.
+spacebear-success-learned = Your mind and body are now connected to the twin spirits. You have learned the Rage of the Space Bear.
+plasmafist-success-learned = You can feel the Heart of Boron pump through your veins. You have learned the legendary PLASMA FIST.
 
 cqc-manual-used = [color=white]{CAPITALIZE(THE($manual))} looks to be already used.[/color]
 
@@ -40,6 +42,11 @@ carp-saying-omae = OMAE WA MOU SHINDEIRU!
 carp-saying-see = YOU CAN'T SEE ME!
 carp-saying-time = MY TIME IS NOW!!
 carp-saying-cowabunga = COWABUNGA!
+
+spacebear-description-fireimmunity = The Rage of Foh'Sie and Smoh'Kie rage shields you from the flames!
+
+plasmafist-saying-fist = PLASMA FIST!
+plasmafist-saying-tornado = TORNADO SWEEP!
 
 krav-maga-ready = You ready a {$action}
 

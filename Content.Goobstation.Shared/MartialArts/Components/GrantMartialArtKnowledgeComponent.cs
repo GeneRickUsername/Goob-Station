@@ -94,3 +94,21 @@ public sealed partial class SleepingCarpStudentComponent : Component
     [DataField]
     public int MinUseDelay = 30;
 }
+
+[RegisterComponent]
+public sealed partial class GrantSpaceBearComponent : GrantMartialArtKnowledgeComponent
+{
+    [DataField]
+    public override MartialArtsForms MartialArtsForm { get; set; } = MartialArtsForms.SpaceBear;
+
+    public override LocId LearnMessage { get; set; } = "spacebear-success-learned";
+}
+
+[RegisterComponent]
+public sealed partial class GrantPlasmaFistComponent : GrantMartialArtKnowledgeComponent
+{
+    [DataField]
+    public override MartialArtsForms MartialArtsForm { get; set; } = MartialArtsForms.PlasmaFist;
+
+    public override LocId LearnMessage { get; set; } = "plasmafist-success-learned";
+}

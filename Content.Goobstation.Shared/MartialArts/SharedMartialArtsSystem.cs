@@ -20,6 +20,7 @@ using Content.Shared._White.Grab;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Chasm;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.EntitySystems;
@@ -34,9 +35,12 @@ using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Speech;
+using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Standing;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
+using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
@@ -79,6 +83,9 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     [Dependency] private readonly BackStabSystem _backstab = default!;
     [Dependency] private readonly SharedGoobStealthSystem _stealth = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly SharedSlurredSystem _slurred = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
@@ -90,6 +97,8 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         InitializeCapoeira();
         InitializeDragon();
         InitializeNinjutsu();
+        InitializeSpaceBear();
+        InitializePlasmaFist();
         InitializeCanPerformCombo();
 
         SubscribeLocalEvent<MartialArtsKnowledgeComponent, ComponentShutdown>(OnShutdown);
@@ -253,6 +262,9 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
                 break;
             case MartialArtsForms.Capoeira:
                 OnCapoeiraAttackPerformed(ent, ref args);
+                break;
+            case MartialArtsForms.SpaceBear:
+                OnSpaceBearAttackPerformed(ent, ref args);
                 break;
         }
     }

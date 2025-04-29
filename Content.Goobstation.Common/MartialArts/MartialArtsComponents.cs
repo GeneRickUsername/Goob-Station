@@ -43,6 +43,10 @@ public sealed partial class MartialArtsKnowledgeComponent : GrabStagesOverrideCo
     [DataField]
     [AutoNetworkedField]
     public string OriginalFistDamageType;
+
+    [DataField]
+    [AutoNetworkedField]
+    public float Experience = 0.0f;
 }
 
 public enum MartialArtsForms
@@ -53,4 +57,6 @@ public enum MartialArtsForms
     Capoeira,
     KungFuDragon,
     Ninjutsu,
+    SpaceBear,
+    PlasmaFist,
 }

@@ -55,3 +55,35 @@
   - type: StaticPrice
     price: 3000
   - type: GrantCapoeira
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: SpaceBearManual
+  name: Space Bear manual
+  description: A scroll of the Space Bears. The visage of the spirits of Foh'Sie and Smoh'Kie can be seen ripping their enemies apart.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/cqc_manual.rsi
+    layers:
+    - state: icon
+  - type: Item
+    size: Small
+  - type: StaticPrice
+    price: 3000
+  - type: GrantSpaceBear
+
+- type: entity
+  parent: [BaseItem, BaseSyndicateContraband]
+  id: PlasmaFistManual
+  name: Plasma Fist manual
+  description: The manual of the legendary martial art. You can feel the Power of the Plasma Fist through its pages.
+  components:
+  - type: Sprite
+    sprite: _Goobstation/Objects/Misc/cqc_manual.rsi
+    layers:
+    - state: icon
+  - type: Item
+    size: Small
+  - type: StaticPrice
+    price: 3000
+  - type: GrantPlasmaFist

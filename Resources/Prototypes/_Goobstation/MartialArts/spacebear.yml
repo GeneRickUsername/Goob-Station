@@ -1,0 +1,43 @@
+- type: martialArt
+  id: SpaceBear
+  martialArtsForm: SpaceBear
+  roundstartCombos: SpaceBearMoves
+
+- type: comboList
+  id: SpaceBearMoves
+  combos:
+  - BearJaws
+  - PawSlam
+  - BearSmokey
+
+- type: combo
+  id: BearJaws
+  name: Bear Jaws
+  martialArtsForm: SpaceBear
+  attacks:
+  - Harm
+  - Grab
+  event: !type:BearJawsPerformedEvent
+  extraDamage: 10
+  paralyzeTime: 5
+
+- type: combo
+  id: PawSlam
+  name: Paw Slam
+  martialArtsForm: SpaceBear
+  attacks:
+  - Disarm
+  - Harm
+  event: !type:PawSlamPerformedEvent
+  extraDamage: 10
+  paralyzeTime: 6
+
+- type: combo
+  id: BearSmokey
+  name: Smokey
+  martialArtsForm: SpaceBear
+  attacks:
+  - Disarm
+  - Disarm
+  event: !type:BearSmokeyPerformedEvent
+  extraDamage: 10

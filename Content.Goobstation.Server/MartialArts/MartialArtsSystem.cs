@@ -10,6 +10,8 @@ using Content.Goobstation.Shared.MartialArts;
 using Content.Goobstation.Shared.MartialArts.Components;
 using Content.Goobstation.Shared.MartialArts.Events;
 using Content.Server.Chat.Systems;
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 
 namespace Content.Goobstation.Server.MartialArts;
 
@@ -19,15 +21,26 @@ namespace Content.Goobstation.Server.MartialArts;
 public sealed class MartialArtsSystem : SharedMartialArtsSystem
 {
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly FlammableSystem _flammable = default!;
+
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<CanPerformComboComponent, SleepingCarpSaying>(OnSleepingCarpSaying);
+        SubscribeLocalEvent<CanPerformComboComponent, MartialArtSaying>(OnMartialArtSaying);
+        SubscribeLocalEvent<CanPerformComboComponent, BurnSomeMunta>(OnBurnSomeMunta);
     }
 
-    private void OnSleepingCarpSaying(Entity<CanPerformComboComponent> ent, ref SleepingCarpSaying args)
+    private void OnMartialArtSaying(Entity<CanPerformComboComponent> ent, ref MartialArtSaying args)
     {
         _chat.TrySendInGameICMessage(ent, Loc.GetString(args.Saying), InGameICChatType.Speak, false);
+    }
+    private void OnBurnSomeMunta(Entity<CanPerformComboComponent> ent, ref BurnSomeMunta args)
+    {
+        if (TryGetEntity(args.Target, out var target) && target is not null)
+        {
+            if (TryComp(target.Value, out FlammableComponent? flammable))
+                _flammable.AdjustFireStacks(target.Value, 2, flammable, true);
+        }
     }
 }

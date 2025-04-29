@@ -122,14 +122,14 @@ public partial class SharedMartialArtsSystem
         {
             var saying =
                 Enumerable.ElementAt<LocId>(martialArtProto.RandomSayings, (int)_random.Next(martialArtProto.RandomSayings.Count));
-            var ev = new SleepingCarpSaying(saying);
+            var ev = new MartialArtSaying(saying);
             RaiseLocalEvent(ent, ev);
         }
         else
         {
             var saying =
                 Enumerable.ElementAt<LocId>(martialArtProto.RandomSayingsDowned, (int)_random.Next(martialArtProto.RandomSayingsDowned.Count));
-            var ev = new SleepingCarpSaying(saying);
+            var ev = new MartialArtSaying(saying);
             RaiseLocalEvent(ent, ev);
         }
     }
