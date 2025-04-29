@@ -18,6 +18,7 @@ public partial class SharedMartialArtsSystem
 {
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
     private void InitializePlasmaFist()
     {
@@ -60,65 +61,49 @@ public partial class SharedMartialArtsSystem
             || !TryUseMartialArt(ent, proto, out var target, out var downed))
             return;
 
-        var mapPos = _transform.GetMapCoordinates(ent).Position;
-        var hitPos = _transform.GetMapCoordinates(target).Position;
-        var dir = hitPos - mapPos;
-        dir *= 1f / dir.Length();
-
         if (TryComp<PullableComponent>(target, out var pullable))
             _pulling.TryStopPull(target, pullable, ent, true);
-
-        var xform = _entityManager.GetComponent<TransformComponent>(ent);
-        var mapId = xform.MapID;
-        var position = _transform.GetMapCoordinates(ent).Position;
 
         var physicsQuery = _entityManager.GetEntityQuery<PhysicsComponent>();
         var movedByPressureQuery = _entityManager.GetEntityQuery<MovedByPressureComponent>();
 
         // Use the entity lookup system to find entities within the radius.
         // Iterate over all entities with PhysicsComponent and TransformComponent
-        var entities = new List<EntityUid>();
-        var query = _entityManager.AllEntityQueryEnumerator<PhysicsComponent, TransformComponent>();
+
         float repulseRadius = 10f;
-        while (query.MoveNext(out var uid, out var phys, out var trans))
+        var position = _transform.GetMapCoordinates(ent);
+        var entities = _lookup.GetEntitiesInRange<TransformComponent>(position, repulseRadius, flags: LookupFlags.All);
+        foreach (var (entity,_) in entities)
         {
-            //if (trans.MapID != mapId)
-            //    continue;
+            //if (!_entityManager.HasComponent<TransformComponent>(entity) || !_entityManager.HasComponent<PhysicsComponent>(entity))
+            //continue;
+            if (entity == ent.Owner)
+                continue;
 
-            if (uid == ent.Owner)
-                break;
-
-            if ((position - _transform.GetMapCoordinates(uid).Position).LengthSquared() <= repulseRadius * repulseRadius)
-            {
-                entities.Add(uid);
-            }
-        }
-
-        foreach (var entity in entities)
-        {
             if (!physicsQuery.TryGetComponent(entity, out var physics))
                 continue;
 
-            if (movedByPressureQuery.TryGetComponent(entity, out var movedPressure) && !movedPressure.Enabled) //Ignore magboots users
+            if (!physicsQuery.HasComponent(entity) || !movedByPressureQuery.HasComponent(entity))
                 continue;
 
             // Calculate the direction from the source to the entity.
             var entityXform = _entityManager.GetComponent<TransformComponent>(entity);
-            var direction = _transform.GetMapCoordinates(entity).Position - position;
+            var direction = _transform.GetMapCoordinates(entity).Position - position.Position;
             var distance = direction.Length();
 
             // Normalize the direction.
             if (distance > 0)
             {
-                direction /= distance;
+                direction = direction.Normalized();
             }
             else
             {
                 // If the entity is at the exact same position, apply a random direction.
-                direction = _random.NextVector2().Normalized();
+                direction = _random.NextAngle().ToVec();
             }
             // Apply the impulse.
-            _entityManager.System<SharedPhysicsSystem>().ApplyLinearImpulse(entity, direction * 1000, body: physics);
+            _stun.TryKnockdown(entity, TimeSpan.FromSeconds(1), true);
+            _physics.ApplyLinearImpulse(entity, direction * 500, body: physics);
         }
         var ev = new MartialArtSaying("plasmafist-saying-tornado");
         RaiseLocalEvent(ent, ev);
@@ -152,8 +137,6 @@ public partial class SharedMartialArtsSystem
         items = _hands.EnumerateHeld(target);
         foreach (var item in items)
         {
-            if (!_hands.TryDrop(target, item))
-                break;
             _throwing.TryThrow(item, dir, 50f, ent, 0);
         }
     }
