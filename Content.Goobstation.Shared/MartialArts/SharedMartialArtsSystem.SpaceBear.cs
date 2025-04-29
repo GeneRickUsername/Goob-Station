@@ -107,7 +107,7 @@ public partial class SharedMartialArtsSystem
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !TryUseMartialArt(ent, proto, out var target, out var downed))
             return;
-       var ev = new BurnSomeMunta(target, proto.ParalyzeTime);
+        var ev = new BurnSomeMunta(target, proto.ParalyzeTime);
         RaiseLocalEvent(ent, ev);
         ComboPopup(ent, target, proto.Name);
     }
