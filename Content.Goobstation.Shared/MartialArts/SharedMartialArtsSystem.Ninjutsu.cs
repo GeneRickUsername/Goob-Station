@@ -1,5 +1,6 @@
 // SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
 // SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
+// SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
@@ -13,6 +14,7 @@ using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Throwing;
@@ -142,6 +144,9 @@ public abstract partial class SharedMartialArtsSystem
         if (target == uid)
             return;
 
+        if (!HasComp<MobStateComponent>(target))
+            return;
+
         if (!IsWeaponValid(uid, ev.Weapon, out _))
             return;
 
@@ -157,6 +162,7 @@ public abstract partial class SharedMartialArtsSystem
             return;
 
         // Assassinate
+
         var isUnarmed = uid == ev.Weapon;
         var damageType = isUnarmed ? "Blunt" : "Slash";
         var modifier = isUnarmed ? sneakAttack.AssassinateUnarmedModifier : sneakAttack.AssassinateModifier;
