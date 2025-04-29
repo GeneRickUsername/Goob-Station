@@ -30,7 +30,7 @@
   - Harm
   event: !type:PawSlamPerformedEvent
   extraDamage: 10
-  paralyzeTime: 6
+  paralyzeTime: 4
 
 - type: combo
   id: BearSmokey
@@ -40,4 +40,4 @@
   - Disarm
   - Disarm
   event: !type:BearSmokeyPerformedEvent
-  extraDamage: 10
+  paralyzeTime: 2

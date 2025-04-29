@@ -37,10 +37,7 @@ public sealed class MartialArtsSystem : SharedMartialArtsSystem
     }
     private void OnBurnSomeMunta(Entity<CanPerformComboComponent> ent, ref BurnSomeMunta args)
     {
-        if (TryGetEntity(args.Target, out var target) && target is not null)
-        {
-            if (TryComp(target.Value, out FlammableComponent? flammable))
-                _flammable.AdjustFireStacks(target.Value, 2, flammable, true);
-        }
+       if (TryComp(args.Target, out FlammableComponent? flammable))
+            _flammable.AdjustFireStacks(args.Target, args.Stacks, flammable, true);
     }
 }

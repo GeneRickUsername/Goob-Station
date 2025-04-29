@@ -45,6 +45,7 @@ public partial class SharedMartialArtsSystem
             return;
         _popupSystem.PopupEntity(Loc.GetString(comp.LearnMessage), args.User, args.User);
         comp.Used = true;
+<<<<<<< Updated upstream
         if (!_entityManager.HasComponent<FireProtectionComponent>(ent))
         {
             _entityManager.AddComponent<FireProtectionComponent>(ent);
@@ -55,6 +56,10 @@ public partial class SharedMartialArtsSystem
         stamProt.Coefficient = 0.8f; // 20% stamina damage resistance
         //_tag.AddTag(ent, "Bear");
         _fireProtectionSystem.OnSetComponent(fireProt, 0.0f, "spacebear-description-fireimmunity"); // Doesn't work?
+=======
+        //_entityManager.AddComponent<FireProtectionComponent>(ent, 0.0f, Loc.GetString("spacebear-description-fireimmunity"));
+        _faction.AddFaction(args.User, "SimpleHostile");
+>>>>>>> Stashed changes
     }
 
     private void OnSpaceBearAttackPerformed(Entity<MartialArtsKnowledgeComponent> ent, ref ComboAttackPerformedEvent args)
@@ -82,12 +87,12 @@ public partial class SharedMartialArtsSystem
 
         if (downed)
         {
-            DoDamage(ent, target, "Slash", 20, out _);
+            DoDamage(ent, target, "Slash", 2*proto.ExtraDamage, out _);
             _stamina.TakeStaminaDamage(ent, -20f, applyResistances: false);
         }
         else
         {
-            DoDamage(ent, target, "Slash", 10, out _);
+            DoDamage(ent, target, "Slash", proto.ExtraDamage, out _);
         }
         ComboPopup(ent, target, proto.Name);
     }
@@ -97,15 +102,15 @@ public partial class SharedMartialArtsSystem
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !TryUseMartialArt(ent, proto, out var target, out var downed))
             return;
-        if (downed)
+        if (!downed)
         {
-            DoDamage(ent, target, "Slash", 10, out _);
-            _stun.TryKnockdown(target, TimeSpan.FromSeconds(4), true);
-            _stun.TrySlowdown(target, TimeSpan.FromSeconds(6), true);
+            DoDamage(ent, target, "Slash", proto.ExtraDamage, out _);
+            _stun.TryKnockdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime), true);  
+            _stun.TrySlowdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime+2), true);
         }
         else
         {
-            DoDamage(ent, target, "Slash", 20, out _);
+            DoDamage(ent, target, "Slash", 2*proto.ExtraDamage, out _);
             _stun.TrySlowdown(target, TimeSpan.FromSeconds(2), true);
         }
         ComboPopup(ent, target, proto.Name);
@@ -115,11 +120,8 @@ public partial class SharedMartialArtsSystem
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !TryUseMartialArt(ent, proto, out var target, out var downed))
             return;
-        if (TryGetNetEntity(target, out var targetNet) && targetNet is not null)
-        {
-            var ev = new BurnSomeMunta(targetNet.Value, 2);
-            RaiseLocalEvent(ent, ev);
-        }
+       var ev = new BurnSomeMunta(target, proto.ParalyzeTime);
+        RaiseLocalEvent(ent, ev);
         ComboPopup(ent, target, proto.Name);
     }
     #endregion

@@ -40,12 +40,4 @@ public sealed class FireProtectionSystem : EntitySystem
         args.Msg.PushNewline();
         args.Msg.AddMarkupOrThrow(Loc.GetString(ent.Comp.ExamineMessage, ("value", value)));
     }
-
-    public void OnSetComponent(FireProtectionComponent? fireProc, float resistance, string examineMessage) // Tag to edit fireComponent from the outside, e.g. Space Bear CQC
-    {
-        if (fireProc == null)
-            return;
-        fireProc.Reduction = resistance;
-        fireProc.ExamineMessage = Loc.GetString(examineMessage);
-    }
 }
