@@ -17,7 +17,7 @@
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
   </Box>
 
-  With a shout of "TORNADO SWEEP", throw everyone downa and repulse all items in a 10.0f radius away from you. This deals no additional damage, but anything that slams or gets slammed is fair game. Very nice for doing havok.
+  With a shout of "TORNADO SWEEP", throw everyone down and repulse all items in a 10.0f radius away from you. This deals no additional damage, but anything that slams or gets slammed is fair game. Very nice for doing havok.
 
   ### Throwback
 
@@ -39,6 +39,6 @@
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
   </Box>
 
-  Violently gib your opponent and send whatever remain flying. This, in contrary to some people's expectations, does indeed kill your opponent. Should be used as a finisher due to its long combo.
+  Scream "PLASMA FIST!" at the top of your lungs and violently gib your opponent, sending whatever remains flying. This, in contrary to some people's expectations, does kill your opponent. Should be used as a finisher due to its long combo.
 
 </Document>
