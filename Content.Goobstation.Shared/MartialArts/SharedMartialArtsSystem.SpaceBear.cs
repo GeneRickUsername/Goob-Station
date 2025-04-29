@@ -1,6 +1,7 @@
 using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Shared.MartialArts.Components;
 using Content.Goobstation.Shared.MartialArts.Events;
+using Content.Goobstation.Shared.Stunnable;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Clothing.Components;
@@ -49,6 +50,9 @@ public partial class SharedMartialArtsSystem
             _entityManager.AddComponent<FireProtectionComponent>(ent);
         }
         var fireProt = _entityManager.GetComponent<FireProtectionComponent>(ent);
+        _entityManager.AddComponent<StaminaDamageResistanceComponent>(ent);
+        var stamProt = _entityManager.GetComponent<StaminaDamageResistanceComponent>(ent);
+        stamProt.Coefficient = 0.8f; // 20% stamina damage resistance
         //_tag.AddTag(ent, "Bear");
         _fireProtectionSystem.OnSetComponent(fireProt, 0.0f, "spacebear-description-fireimmunity"); // Doesn't work?
     }
