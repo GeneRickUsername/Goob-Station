@@ -45,21 +45,8 @@ public partial class SharedMartialArtsSystem
             return;
         _popupSystem.PopupEntity(Loc.GetString(comp.LearnMessage), args.User, args.User);
         comp.Used = true;
-<<<<<<< Updated upstream
-        if (!_entityManager.HasComponent<FireProtectionComponent>(ent))
-        {
-            _entityManager.AddComponent<FireProtectionComponent>(ent);
-        }
-        var fireProt = _entityManager.GetComponent<FireProtectionComponent>(ent);
-        _entityManager.AddComponent<StaminaDamageResistanceComponent>(ent);
-        var stamProt = _entityManager.GetComponent<StaminaDamageResistanceComponent>(ent);
-        stamProt.Coefficient = 0.8f; // 20% stamina damage resistance
-        //_tag.AddTag(ent, "Bear");
-        _fireProtectionSystem.OnSetComponent(fireProt, 0.0f, "spacebear-description-fireimmunity"); // Doesn't work?
-=======
         //_entityManager.AddComponent<FireProtectionComponent>(ent, 0.0f, Loc.GetString("spacebear-description-fireimmunity"));
         _faction.AddFaction(args.User, "SimpleHostile");
->>>>>>> Stashed changes
     }
 
     private void OnSpaceBearAttackPerformed(Entity<MartialArtsKnowledgeComponent> ent, ref ComboAttackPerformedEvent args)
@@ -105,8 +92,8 @@ public partial class SharedMartialArtsSystem
         if (!downed)
         {
             DoDamage(ent, target, "Slash", proto.ExtraDamage, out _);
-            _stun.TryKnockdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime), true);  
-            _stun.TrySlowdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime+2), true);
+            _stun.TryKnockdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime), true);
+            _stun.TrySlowdown(target, TimeSpan.FromSeconds(proto.ParalyzeTime + 2), true);
         }
         else
         {
