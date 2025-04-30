@@ -212,3 +212,12 @@
     Heat: 0.8
     Ion: 2.0 # double damage from ion
   ignoreArmorPierceFlags: All # Goobstation
+
+- type: damageModifierSet
+  id: HeatImmunity
+  coefficients:
+    Heat: 0.0
+  flatReductions:
+    Heat: 50
+  ignoreArmorPierceFlags: All # Goobstation
+

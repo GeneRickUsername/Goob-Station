@@ -16,7 +16,6 @@ namespace Content.Goobstation.Shared.MartialArts;
 
 public partial class SharedMartialArtsSystem
 {
-    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 

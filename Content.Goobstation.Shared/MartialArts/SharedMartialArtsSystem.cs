@@ -20,6 +20,7 @@ using Content.Shared._White.Grab;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
+using Content.Shared.Body.Systems;
 using Content.Shared.Chasm;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
@@ -86,6 +87,8 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     [Dependency] private readonly SharedSlurredSystem _slurred = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
+    [Dependency] private readonly SharedBodySystem _bodySystem = default!;
+
 
     public override void Initialize()
     {

@@ -2,10 +2,14 @@ using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Shared.MartialArts.Components;
 using Content.Goobstation.Shared.MartialArts.Events;
 using Content.Goobstation.Shared.Stunnable;
+using Content.Goobstation.Shared.Temperature;
+using Content.Goobstation.Shared.Temperature.Components;
 using Content.Shared._Shitmed.Targeting;
 using Content.Shared.Atmos.Components;
+using Content.Shared.Body.Systems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
@@ -14,7 +18,6 @@ namespace Content.Goobstation.Shared.MartialArts;
 
 public partial class SharedMartialArtsSystem
 {
-    [Dependency] private readonly FireProtectionSystem _fireProtectionSystem = default!;
     private void InitializeSpaceBear()
     {
         SubscribeLocalEvent<CanPerformComboComponent, BearJawsPerformedEvent>(OnBearJaws);
@@ -45,8 +48,15 @@ public partial class SharedMartialArtsSystem
             return;
         _popupSystem.PopupEntity(Loc.GetString(comp.LearnMessage), args.User, args.User);
         comp.Used = true;
-        //_entityManager.AddComponent<FireProtectionComponent>(ent, 0.0f, Loc.GetString("spacebear-description-fireimmunity"));
+        var slots = _bodySystem.GetBodyChildren(args.User);
+        foreach (var (slot,_) in slots)
+        {
+            EnsureComp<SpecialHighTempImmunityComponent>(slot);
+            _damageable.SetDamageModifierSetId(slot, "HeatImmunity");
+        }
+        EnsureComp<SpecialHighTempImmunityComponent>(args.User);
         _faction.AddFaction(args.User, "SimpleHostile");
+        _damageable.SetDamageModifierSetId(args.User, "HeatImmunity");
     }
 
     private void OnSpaceBearAttackPerformed(Entity<MartialArtsKnowledgeComponent> ent, ref ComboAttackPerformedEvent args)
