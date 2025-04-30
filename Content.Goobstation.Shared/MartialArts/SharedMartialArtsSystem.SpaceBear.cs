@@ -49,14 +49,14 @@ public partial class SharedMartialArtsSystem
         _popupSystem.PopupEntity(Loc.GetString(comp.LearnMessage), args.User, args.User);
         comp.Used = true;
         var slots = _bodySystem.GetBodyChildren(args.User);
-        foreach (var (slot,_) in slots)
+        foreach (var (slot, _) in slots)
         {
             EnsureComp<SpecialHighTempImmunityComponent>(slot);
-            _damageable.SetDamageModifierSetId(slot, "HeatImmunity");
+            //_damageable.SetDamageModifierSetId(slot, "HeatImmunity");
         }
         EnsureComp<SpecialHighTempImmunityComponent>(args.User);
         _faction.AddFaction(args.User, "SimpleHostile");
-        _damageable.SetDamageModifierSetId(args.User, "HeatImmunity");
+        //_damageable.SetDamageModifierSetId(args.User, "HeatImmunity");
     }
 
     private void OnSpaceBearAttackPerformed(Entity<MartialArtsKnowledgeComponent> ent, ref ComboAttackPerformedEvent args)
@@ -68,7 +68,7 @@ public partial class SharedMartialArtsSystem
         {
             case ComboAttackType.Harm:
                 DoDamage(ent, args.Target, "Slash", 10, out _);
-                _stamina.TakeStaminaDamage(args.Performer, -20f, applyResistances: false);
+                _stamina.TryTakeStamina(args.Performer, -20f);
                 break;
         }
     }
@@ -85,7 +85,7 @@ public partial class SharedMartialArtsSystem
         if (downed)
         {
             DoDamage(ent, target, "Slash", 2 * proto.ExtraDamage, out _);
-            _stamina.TakeStaminaDamage(ent, -20f, applyResistances: false);
+            _stamina.TryTakeStamina(ent, -20f);
         }
         else
         {

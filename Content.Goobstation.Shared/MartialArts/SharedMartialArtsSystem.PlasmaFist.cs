@@ -118,11 +118,11 @@ public partial class SharedMartialArtsSystem
         var mapPos = _transform.GetMapCoordinates(ent).Position;
         var hitPos = _transform.GetMapCoordinates(target).Position;
         var dir = hitPos - mapPos;
-        dir *= 1f / dir.Length();
+        dir = dir.Normalized();
 
         if (TryComp<PullableComponent>(target, out var pullable))
             _pulling.TryStopPull(target, pullable, ent, true);
-        _grabThrowing.Throw(target, ent, dir, 50f);
+        _grabThrowing.Throw(target, ent, dir * 25f, 2f);
 
         ComboPopup(ent, target, proto.Name);
 
@@ -131,12 +131,12 @@ public partial class SharedMartialArtsSystem
         {
             if (!_hands.TryDrop(ent, item))
                 break;
-            _throwing.TryThrow(item, dir, 50f, ent, 0);
+            _throwing.TryThrow(item, dir * 25f, 2f, ent, 0);
         }
         items = _hands.EnumerateHeld(target);
         foreach (var item in items)
         {
-            _throwing.TryThrow(item, dir, 50f, ent, 0);
+            _throwing.TryThrow(item, dir * 25f, 2f, ent, 0);
         }
     }
     private void OnThePlasmaFist(Entity<CanPerformComboComponent> ent, ref ThePlasmaFistPerformedEvent args)
@@ -149,7 +149,7 @@ public partial class SharedMartialArtsSystem
             var mapPos = _transform.GetMapCoordinates(ent).Position;
             var hitPos = _transform.GetMapCoordinates(target).Position;
             var dir = hitPos - mapPos;
-            dir *= 1f / dir.Length();
+            dir = dir.Normalized();
             _bodySystem.GibBody(target, splatDirection: dir, splatModifier: 100);
         }
         var ev = new MartialArtSaying("plasmafist-saying-fist");

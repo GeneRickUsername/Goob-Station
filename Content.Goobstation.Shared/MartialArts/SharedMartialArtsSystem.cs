@@ -4,13 +4,18 @@
 // SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
 // SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
 // SPDX-FileCopyrightText: 2025 Lincoln McQueen <lincoln.mcqueen@gmail.com>
+// SPDX-FileCopyrightText: 2025 Marcus F <marcus2008stoke@gmail.com>
 // SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
 // SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
+// SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
+// SPDX-FileCopyrightText: 2025 thebiggestbruh <199992874+thebiggestbruh@users.noreply.github.com>
+// SPDX-FileCopyrightText: 2025 thebiggestbruh <marcus2008stoke@gmail.com>
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using System.Linq;
 using Content.Goobstation.Common.MartialArts;
+using Content.Goobstation.Shared.Changeling.Components;
 using Content.Goobstation.Shared.MartialArts.Components;
 using Content.Goobstation.Shared.Stealth;
 using Content.Shared._Goobstation.Heretic.Components;
@@ -21,7 +26,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Body.Systems;
-using Content.Shared.Chasm;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Hands.EntitySystems;
@@ -84,11 +88,10 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     [Dependency] private readonly BackStabSystem _backstab = default!;
     [Dependency] private readonly SharedGoobStealthSystem _stealth = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedSlurredSystem _slurred = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly NpcFactionSystem _faction = default!;
     [Dependency] private readonly SharedBodySystem _bodySystem = default!;
-
+    [Dependency] private readonly SharedSlurredSystem _slurred = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
@@ -266,9 +269,6 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             case MartialArtsForms.Capoeira:
                 OnCapoeiraAttackPerformed(ent, ref args);
                 break;
-            case MartialArtsForms.SpaceBear:
-                OnSpaceBearAttackPerformed(ent, ref args);
-                break;
         }
     }
 
@@ -360,7 +360,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         if (args.Weapon != ent)
             return;
 
-        if(!_proto.TryIndex<MartialArtPrototype>(comp.MartialArtsForm.ToString(), out var martialArtsPrototype))
+        if (!_proto.TryIndex<MartialArtPrototype>(comp.MartialArtsForm.ToString(), out var martialArtsPrototype))
             return;
 
         if (!martialArtsPrototype.RandomDamageModifier)
@@ -377,7 +377,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         if (TerminatingOrDeleted(ent))
             return;
 
-        if(TryComp<CanPerformComboComponent>(ent, out var comboComponent))
+        if (TryComp<CanPerformComboComponent>(ent, out var comboComponent))
             comboComponent.AllowedCombos.Clear();
 
         RemCompDeferred<DragonKungFuTimerComponent>(ent);
@@ -438,6 +438,12 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     {
         if (!_netManager.IsServer || MetaData(user).EntityLifeStage >= EntityLifeStage.Terminating)
             return false;
+
+        if (HasComp<ChangelingIdentityComponent>(user))
+        {
+            _popupSystem.PopupEntity(Loc.GetString("cqc-fail-changeling"), user, user);
+            return false;
+        }
 
         if (HasComp<KravMagaComponent>(user))
         {
@@ -587,7 +593,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         TargetBodyPart? targetBodyPart = null)
     {
         damage = new DamageSpecifier();
-        if(!TryComp<TargetingComponent>(ent, out var targetingComponent))
+        if (!TryComp<TargetingComponent>(ent, out var targetingComponent))
             return;
         damage.DamageDict.Add(damageType, damageAmount);
         if (TryComp(ent, out MartialArtModifiersComponent? modifiers))
